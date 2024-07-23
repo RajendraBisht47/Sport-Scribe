@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head") %>
+    <title>Home Page</title>
+</head>
+<body>
+    <%- include("./partials/nav")  %>
+
+    <% if (locals.message) { %>
+        <div class="conatiner m-5" style="display: flex; justify-content: center;align-items: center;">
+            <h5><%= locals.message %></h5>
+        </div>
+        
+    <% } %>
+   
+    <% if (locals.posters&&posters.length>0) { %>
+
+            <div class="contains row row-cols-5 m-3 " style="gap: 20px; justify-content: center;">
+                <% posters.forEach(poster => { %>
+                        <div class="card" style="width: 18rem;">
+                            <div class="mt-1" style=" height: 143px;
+                width: 264px;">
+                                <img src="<%= poster.poster  %>" class="card-img-top"  alt="" style=" width: 100%;
+                                height: 100%;
+                                object-fit: contain;">
+                            </div>
+                            <div class="card-body">
+                              <h5 class="card-title"><% if (poster.sportname=="powerlifting") { %>
+                               Powerlifting
+                              <% } else if(poster.sportname=="armwrestling") {%>
+                                Arm Wrestling
+                              <% } else { %>
+                                Wrestling
+                              <% }  %>
+                            </h5>
+                              <a href="/poster/<%= poster._id  %>"  style="margin-right: 50px ;" ><button type="button" class="btn btn-primary position-relative">
+                                View
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <% if (poster.view<=99) { %>
+                                        <%= poster.view  %>
+                                    <% } %>
+                                    <% if (poster.view>99) { %>
+                                        99+
+                                    <% } %>
+            
+                                </span>
+            
+                              </button></a>
+            
+            
+                              <a href="/poster/<%= poster._id  %>" ><button type="button" class="btn btn-primary position-relative">
+                                Comments
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <% if (poster.comment<=99) { %>
+                                        <%= poster.comment  %>
+                                    <% } %>
+                                    <% if (poster.comment>99) { %>
+                                        99+
+                                    <% } %>
+            
+                                </span>
+            
+                              </button></a>
+            
+                            </div>
+                        </div>
+                <% }) %>
+            </div>
+         
+
+        
+
+    <% } %>
+    
+        
+            
+          
+    
+    <%- include("./partials/script") %>
+</body>
+</html>
