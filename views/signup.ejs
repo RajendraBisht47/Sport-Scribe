@@ -1,37 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <%- include("./partials/head") %>
     <title>Signup-page</title>
-</head>
-<body>
-    <%- include("./partials/nav")  %>
-    <div class="conatiner mb-3" >
-
+  </head>
+  <body>
+    <%- include("./partials/nav") %>
+    <div class="conatiner mb-3">
       <% if (locals.message) { %>
-        <div class="alert alert-danger" role="alert">
-          <%= locals.message  %>
-        </div>
+      <div class="alert alert-danger" role="alert"><%= locals.message %></div>
       <% } %>
 
-        <form action="/user/signup" method="post" enctype="multipart/form-data">
-
-            <div class="m-3">
-                <label for="profileurl" class="form-label">Profile Photo</label>
-                <input name="profileurl" type="file" accept="image/*" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              </div>
-            <div class="m-3">
-              <label for="username" class="form-label">Username</label>
-              <input required type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-              name="username">
-            </div>
-            <div class="m-3">
-              <label for="password" class="form-label">Create Password</label>
-              <input required type="password" class="form-control" id="exampleInputPassword1" name="password">
-            </div>
-            <button type="submit" class="btn btn-primary m-3">Signup</button>
-          </form>
+      <form action="/user/signup" method="post">
+        <div class="m-3">
+          <label for="profileurl" class="form-label">Profile Photo</label>
+          <input
+            name="profileurl"
+            type="file"
+            accept="image/*"
+            class="form-control"
+            id="profileurl"
+            aria-describedby="emailHelp"
+            onchange="handleFileChange()"
+          />
+          <input type="hidden" name="profileurlBase64" id="profileurlBase64" />
+        </div>
+        <div class="m-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            required
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            name="username"
+          />
+        </div>
+        <div class="m-3">
+          <label for="password" class="form-label">Create Password</label>
+          <input
+            required
+            type="password"
+            class="form-control"
+            id="exampleInputPassword1"
+            name="password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Signup</button>
+      </form>
     </div>
     <%- include("./partials/script") %>
-</body>
+    <script>
+      function handleFileChange() {
+        const fileInput = document.getElementById("profileurl");
+        const file = fileInput.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = function () {
+            document.getElementById("profileurlBase64").value = reader.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    </script>
+  </body>
 </html>
