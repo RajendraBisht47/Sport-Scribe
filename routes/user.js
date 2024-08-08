@@ -2,8 +2,6 @@ const { Router } = require("express");
 const { Module } = require("module");
 const router = Router();
 const User = require("../models/user");
-const multer = require("multer");
-const { GridFsStorage } = require("multer-gridfs-storage");
 const path = require("path");
 const fs = require("fs");
 require("dotenv").config();
