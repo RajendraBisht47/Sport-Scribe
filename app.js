@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -38,9 +39,14 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 //mongdb connection code.
-mongoose.connect(process.env.MONGO_URL).then((error) => {
-  console.log("MongoDB connected");
-});
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
 app.get("/", async (req, res) => {
   const posters = await Poster.find({});
