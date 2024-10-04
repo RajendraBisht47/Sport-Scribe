@@ -6,12 +6,19 @@
   </head>
   <body>
     <%- include("./partials/nav") %>
-    <div class="conatiner mb-3">
+    <div class="container mb-3">
       <% if (locals.message) { %>
       <div class="alert alert-danger" role="alert"><%= locals.message %></div>
       <% } %>
 
-      <form action="/user/signup" method="post">
+      <!-- The form now includes 'enctype="multipart/form-data"' to support file uploads -->
+      <form
+        id="signupForm"
+        action="/user/signup"
+        method="post"
+        enctype="multipart/form-data"
+        onsubmit="return disableButton()"
+      >
         <div class="m-3">
           <label for="profileurl" class="form-label">Profile Photo</label>
           <input
@@ -21,9 +28,7 @@
             class="form-control"
             id="profileurl"
             aria-describedby="emailHelp"
-            onchange="handleFileChange()"
           />
-          <input type="hidden" name="profileurlBase64" id="profileurlBase64" />
         </div>
         <div class="m-3">
           <label for="username" class="form-label">Username</label>
@@ -46,21 +51,19 @@
             name="password"
           />
         </div>
-        <button type="submit" class="btn btn-primary m-3">Signup</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary m-3">
+          Signup
+        </button>
       </form>
     </div>
     <%- include("./partials/script") %>
+
     <script>
-      function handleFileChange() {
-        const fileInput = document.getElementById("profileurl");
-        const file = fileInput.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onloadend = function () {
-            document.getElementById("profileurlBase64").value = reader.result;
-          };
-          reader.readAsDataURL(file);
-        }
+      function disableButton() {
+        const submitButton = document.getElementById("submitBtn");
+        submitButton.disabled = true;
+        submitButton.innerText = "Processing...";
+        return true;
       }
     </script>
   </body>
