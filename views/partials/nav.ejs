@@ -1,61 +1,120 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary"  style="background-color: #cde8fc !important;">
+<nav
+  class="navbar navbar-expand-lg bg-body-tertiary"
+  style="background-color: #0f96fd !important"
+>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Sport Scribe</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarScroll"
+      aria-controls="navbarScroll"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul
+        class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+        style="--bs-scroll-height: 100px"
+      >
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
 
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Sport Scribe</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarScroll">
-        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-          
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Sports
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/sport/armwrestling">Arm Wrestling</a></li>
-              <li><a class="dropdown-item" href="/sport/powerlifting">Power Lifting</a></li>
-              <li><a class="dropdown-item" href="/sport/wrestling">Wrestling</a></li>
-            </ul>
-          </li>
-          
-          <% if (locals.user) { %>
-            <li class="nav-item">
-              <a class="nav-link" href="/poster/create">Upload Poster</a>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Sports
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="/sport/armwrestling"
+                >Arm Wrestling</a
+              >
             </li>
-            <li class="nav-item" style="margin: 0;padding: 0;">
-              <a class="nav-link" href="#" style="margin: 0;padding: 0;overflow: hidden; height: 40px;width: 40px;" > <img src="<%= locals.user.profileurl  %>" alt="error" height="40px" style="border-radius: 100% ; object-fit:cover;width: 40px;"></a>
+            <li>
+              <a class="dropdown-item" href="/sport/powerlifting"
+                >Power Lifting</a
+              >
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-               
-                <%= locals.user.username  %>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/yourposter">Your Poster</a></li>
-                <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
-              </ul>
+            <li>
+              <a class="dropdown-item" href="/sport/wrestling">Wrestling</a>
             </li>
-          <% } else{ %>
-            <li class="nav-item">
-              <a class="nav-link" href="/user/signup">Create Account</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/user/signin">Signin</a>
-            </li>
-            <% } %>
-          
+          </ul>
+        </li>
 
-         
+        <% if (locals.user) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/poster/create">Upload Poster</a>
+        </li>
 
-        </ul>
-        <form class="d-flex" role="search" action="/search" method="post">
-          <input required class="form-control me-2" type="search" placeholder="Search username" aria-label="Search" name="username">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
+        <li class="nav-item" style="margin: 0; padding: 0">
+          <a
+            class="nav-link"
+            href="#"
+            style="
+              margin: 0;
+              padding: 0;
+              overflow: hidden;
+              height: 40px;
+              width: 40px;
+            "
+          >
+            <img
+              src="<%= locals.user && locals.user.profileurl ? locals.user.profileurl : '/images/user.png' %>"
+              alt="error"
+              height="40px"
+              style="border-radius: 100%; object-fit: cover; width: 40px"
+            />
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <%= locals.user.username %>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/yourposter">Your Poster</a></li>
+            <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+          </ul>
+        </li>
+
+        <% } else{ %>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/signup">Create Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/user/signin"
+            >Signin</a
+          >
+        </li>
+        <% } %>
+      </ul>
+      <form class="d-flex" role="search" action="/search" method="post">
+        <input
+          required
+          class="form-control me-2"
+          type="search"
+          placeholder="Search username"
+          aria-label="Search"
+          name="username"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
-  </nav>
+  </div>
+</nav>
