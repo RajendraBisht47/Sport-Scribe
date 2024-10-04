@@ -1,103 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <%- include("./partials/head") %>
     <title>Poster</title>
-</head>
-<style>
-    .class{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
+  </head>
+  <style>
+    .class {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
     }
-    .containers{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
+    .containers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-    .img,.mt-2{
-        width: 70vw;
+    .img,
+    .mt-2 {
+      width: 70vw;
     }
-    span{
-        font-weight: 650;
+    span {
+      font-weight: 650;
     }
-</style>
-<body>
-    <%- include("./partials/nav")  %>
-    
+  </style>
+  <body>
+    <%- include("./partials/nav") %>
 
     <div class="containers mt-4">
+      <div class="m-4 class">
+        <img
+          src="<%= locals.creator.profileurl %>"
+          height="50px"
+          width="50px"
+          alt=""
+          style="border-radius: 100%"
+        />
+        <h4><%= locals.creator.username %></h4>
+      </div>
+      <div style="width: min(60vw, 60vh); height: min(60vw, 60vh)">
+        <img
+          class="img"
+          src="<%= locals.poster.posterurl  %>"
+          style="width: 100%; height: 100%; object-fit: contain"
+          alt="Network error"
+        />
+      </div>
+      <div class="mt-2">
+        <br />
+        <h3>Details</h3>
+        <hr />
+        <p><span>Sport :</span> <%= locals.poster.sportname %></p>
+        <p><span>Email :</span> <%= locals.poster.email %></p>
+        <p><span>Contact Number :</span> <%= locals.poster.phonenumber %></p>
+        <p><span>Name :</span> <%= locals.poster.username %></p>
+        <h3>Location :</h3>
+        <p><span>State :</span> <%= locals.poster.state %></p>
+        <p><span>City :</span> <%= locals.poster.city %></p>
+        <p><span>zip code :</span> <%= locals.poster.zip %></p>
+        <p><span>Location :</span> <%= locals.poster.location %></p>
+        <p><span>Description :</span> <%= locals.poster.description %></p>
 
-        
+        <div class="container mb-1">
+          <br />
+          <hr />
+          <br />
+          <h3>Comments(<%= comments.length %>)</h3>
+          <% if (locals.user) { %>
+          <div class="conatiner mb-3">
+            <form
+              action="/poster/comment/<%= poster._id  %>"
+              method="post"
+              style="display: flex; flex-direction: row"
+            >
+              <div class="m-3">
+                <input
+                  required
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  name="comment"
+                  placeholder="comment"
+                />
+              </div>
 
-        <div class="m-4 class">
-            <img src="<%= locals.creator.profileurl %>" height="50px" width="50px" alt="" style="border-radius: 100%;">
-            <h4><%= locals.creator.username %></h4>
+              <button id="submitBtn" type="submit" class="btn btn-primary m-3">
+                Send
+              </button>
+            </form>
+          </div>
+          <% } %> <% comments.forEach(comment => { %>
+          <div class="m-2">
+            <img
+              src="<%= comment.createdBy.profileurl  %>"
+              alt="error"
+              style="border-radius: 100%; margin-right: 5px"
+              width="30"
+              height="30px"
+            />
+            <spam><%= comment.createdBy.username %></spam>
+            <pre style="margin-top: 3px"><%= comment.comment %></pre>
+          </div>
+
+          <% }) %>
         </div>
-        <div style=" width: min(60vw, 60vh);
-    height: min(60vw,60vh);">
-            <img class="img" src="<%= locals.poster.poster  %>" style="width: 100%;
-            height: 100%;
-            object-fit: contain;" alt="Network error">
-        </div>
-        <div class="mt-2">
-            <br>
-            <h3>Details</h3>
-            <hr>
-            <p><span>Sport :</span> <%= locals.poster.sportname  %></p>
-            <p><span>Email :</span> <%= locals.poster.email  %></p>
-            <p><span>Contact Number :</span> <%= locals.poster.phonenumber  %></p>
-            <p><span>Name :</span> <%= locals.poster.username  %></p>
-            <h3>Location : </h3>
-            <p><span>State :</span> <%= locals.poster.state  %></p>
-            <p><span>City :</span> <%= locals.poster.city  %></p>
-            <p><span>zip code :</span> <%= locals.poster.zip  %></p>
-            <p><span>Location :</span> <%= locals.poster.location  %></p>
-            <p><span>Description :</span> <%= locals.poster.description  %></p>
-
-            <div class="container mb-1">
-                <br><hr><br>
-                <h3>Comments(<%= comments.length  %>)</h3>
-                <% if (locals.user) { %>
-                    <div class="conatiner mb-3" >
-            
-                        <form action="/poster/comment/<%= poster._id  %>" method="post" style="display: flex; flex-direction: row;">
-                            <div class="m-3">
-                              <input  required type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                              name="comment" placeholder="comment">
-                            </div>
-            
-                          
-                            <button type="submit" class="btn btn-primary m-3">Send</button>
-                          </form>
-                    </div>
-                <% } %>
-                <% comments.forEach(comment => { %>
-                    <div class="m-2">
-                        
-                        <img src="<%= comment.createdBy.profileurl  %>" alt="error" style="border-radius: 100%;margin-right: 5px;" width="30" height="30px" >
-                        <spam><%= comment.createdBy.username  %></spam>
-                        <pre style="margin-top: 3px;"><%= comment.comment %></pre>
-    
-                    </div>
-                   
-                <% }) %>
-            </div>
-
-        </div>
-
-        
-
-       
+      </div>
     </div>
-    
-    
-
-
+    <script>
+      function disableButton() {
+        const submitButton = document.getElementById("submitBtn");
+        submitButton.disabled = true;
+        submitButton.innerText = "Processing...";
+        return true;
+      }
+    </script>
     <%- include("./partials/script") %>
-</body>
+  </body>
 </html>
