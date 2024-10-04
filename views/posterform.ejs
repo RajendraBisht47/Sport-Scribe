@@ -8,37 +8,39 @@
     <%- include("./partials/nav") %> <% if (locals.message) { %>
     <div class="alert alert-danger" role="alert"><%= locals.message %></div>
     <% } %>
+
     <div class="container mb-3">
-      <form action="/poster/create" method="post">
+      <form action="/poster/create" method="post" enctype="multipart/form-data">
         <div class="m-3">
-          <label for="poster" class="form-label">Poster Image</label>
+          <label for="posterurl" class="form-label">Poster Image</label>
           <input
             required
-            name="poster"
+            name="posterurl"
             type="file"
             class="form-control"
-            id="poster"
-            aria-describedby="emailHelp"
-            onchange="handleFileChange()"
+            id="posterurl"
+            aria-describedby="posterHelp"
           />
-          <input type="hidden" name="posterBase64" id="posterBase64" />
+          <div id="posterHelp" class="form-text">
+            Upload a poster image in JPEG, PNG, or GIF format.
+          </div>
         </div>
 
         <div class="m-3">
           <label for="sportname" class="form-label">Sports Name</label>
           <select
             name="sportname"
-            class="form-select is-invalid"
+            class="form-select"
             id="sportname"
-            aria-describedby="validationServer04Feedback"
+            aria-describedby="sportFeedback"
             required
           >
             <option selected disabled value="">Choose...</option>
-            <option value="armwrestling">Arm wrestling</option>
+            <option value="armwrestling">Arm Wrestling</option>
             <option value="powerlifting">Powerlifting</option>
             <option value="wrestling">Wrestling</option>
           </select>
-          <div id="validationServerUsernameFeedback" class="invalid-feedback">
+          <div id="sportFeedback" class="invalid-feedback">
             Please choose a Sports Name.
           </div>
         </div>
@@ -51,7 +53,7 @@
             type="date"
             class="form-control"
             id="date"
-            aria-describedby="emailHelp"
+            aria-describedby="dateHelp"
           />
         </div>
 
@@ -62,39 +64,38 @@
             name="time"
             type="time"
             class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
+            id="time"
+            aria-describedby="timeHelp"
           />
         </div>
 
         <div class="m-3">
-          <label for="email" class="form-label">Email address</label>
+          <label for="email" class="form-label">Email Address</label>
           <input
             required
             name="email"
             type="email"
             class="form-control"
-            id="exampleInputEmail1"
+            id="email"
             aria-describedby="emailHelp"
           />
         </div>
 
         <div class="m-3">
-          <label for="phonenumber" class="form-label">phonenumber</label>
+          <label for="phonenumber" class="form-label">Phone Number</label>
           <input
             name="phonenumber"
             type="text"
             pattern="\d{10}"
-            class="form-control is-invalid"
+            class="form-control"
             id="phonenumber"
             title="Please enter a valid 10-digit phone number"
             minlength="10"
             maxlength="10"
-            aria-describedby="validationServer03Feedback"
             required
           />
-          <div id="validationServer03Feedback" class="invalid-feedback">
-            Please provide a valid phonenumber.
+          <div id="phoneFeedback" class="invalid-feedback">
+            Please provide a valid phone number.
           </div>
         </div>
 
@@ -105,12 +106,12 @@
             <input
               name="username"
               type="text"
-              class="form-control is-invalid"
-              id="validationServerUsername"
-              aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback"
+              class="form-control"
+              id="username"
+              aria-describedby="usernameFeedback"
               required
             />
-            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            <div id="usernameFeedback" class="invalid-feedback">
               Please choose a username.
             </div>
           </div>
@@ -118,18 +119,12 @@
 
         <div class="m-3">
           <label for="state" class="form-label">State</label>
-          <select
-            name="state"
-            class="form-select is-invalid"
-            id="state"
-            aria-describedby="validationServer04Feedback"
-            required
-          >
+          <select name="state" class="form-select" id="state" required>
             <option selected disabled value="">Choose...</option>
             <option>Uttarakhand</option>
             <option>Himachal Pradesh</option>
           </select>
-          <div id="validationServer04Feedback" class="invalid-feedback">
+          <div id="stateFeedback" class="invalid-feedback">
             Please select a valid state.
           </div>
         </div>
@@ -139,28 +134,26 @@
           <input
             name="city"
             type="text"
-            class="form-control is-invalid"
+            class="form-control"
             id="city"
-            aria-describedby="validationServer03Feedback"
             required
           />
-          <div id="validationServer03Feedback" class="invalid-feedback">
+          <div id="cityFeedback" class="invalid-feedback">
             Please provide a valid city.
           </div>
         </div>
 
         <div class="m-3">
-          <label for="zip" class="form-label">Zip</label>
+          <label for="zip" class="form-label">Zip Code</label>
           <input
             name="zip"
             type="text"
-            class="form-control is-invalid"
+            class="form-control"
             id="zip"
-            aria-describedby="validationServer05Feedback"
             required
           />
-          <div id="validationServer05Feedback" class="invalid-feedback">
-            Please provide a valid zip.
+          <div id="zipFeedback" class="invalid-feedback">
+            Please provide a valid zip code.
           </div>
         </div>
 
@@ -171,8 +164,7 @@
             name="location"
             type="text"
             class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
+            id="location"
           />
         </div>
 
@@ -181,29 +173,26 @@
           <textarea
             name="description"
             class="form-control"
-            id="exampleFormControlTextarea1"
+            id="description"
             rows="5"
-            value="Please follow the rules and be aware that any inappropriate behavior will incur a fine. Maintain respect for others. Thank you for visiting this poster, and we hope you will come again. Let's work together to create a positive and enjoyable environment for everyone."
-            placeholder=""
+            placeholder="Please follow the rules and be aware that any inappropriate behavior will incur a fine. Maintain respect for others. Thank you for visiting this poster, and we hope you will come again. Let's work together to create a positive and enjoyable environment for everyone."
           ></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary m-3">Create</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary m-3">
+          Create
+        </button>
       </form>
     </div>
-    <%- include("./partials/script") %>
+
     <script>
-      function handleFileChange() {
-        const fileInput = document.getElementById("poster");
-        const file = fileInput.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onloadend = function () {
-            document.getElementById("posterBase64").value = reader.result;
-          };
-          reader.readAsDataURL(file);
-        }
+      function disableButton() {
+        const submitButton = document.getElementById("submitBtn");
+        submitButton.disabled = true;
+        submitButton.innerText = "Processing...";
+        return true;
       }
     </script>
+    <%- include("./partials/script") %>
   </body>
 </html>
