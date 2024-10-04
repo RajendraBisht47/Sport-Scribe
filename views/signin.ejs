@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <%- include("./partials/head") %>
     <title>Signin page</title>
-</head>
-<body>
-    <%- include("./partials/nav")  %>
-    <div class="conatiner mb-3" >
+  </head>
+  <body>
+    <%- include("./partials/nav") %>
+    <div class="container mb-3">
+      <% if (locals.message) { %>
+      <div class="alert alert-danger" role="alert"><%= locals.message %></div>
+      <% } %>
 
-        <% if (locals.message) { %>
-          <div class="alert alert-danger" role="alert">
-            <%= locals.message  %>
-          </div>
-        <% } %>
-  
-          <form action="/user/signin" method="post">
-              <div class="m-3">
-                <label for="username" class="form-label">Username</label>
-                <input <% if (locals.username) { %>
-                 value="<%= locals.username  %>"
-                <% } %> required type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                name="username">
-              </div>
+      <form
+        id="signinForm"
+        action="/user/signin"
+        method="post"
+        onsubmit="return disableButton()"
+      >
+        <div class="m-3">
+          <label for="username" class="form-label">Username</label>
+          <input required type="text" class="form-control"
+          id="exampleInputEmail1" aria-describedby="emailHelp" name="username"
+          <%= locals.username ? `value="${locals.username}"` : '' %>>
+        </div>
 
-              <div class="m-3">
-                <label for="password" class="form-label">Create Password</label>
-                <input <% if (locals.password) { %>
-                    value="<%= locals.password  %>"
-                   <% } %> required type="password" class="form-control" id="exampleInputPassword1" name="password">
-              </div>
+        <div class="m-3">
+          <label for="password" class="form-label">Create Password</label>
+          <input required type="password" class="form-control"
+          id="exampleInputPassword1" name="password" <%= locals.password ?
+          `value="${locals.password}"` : '' %>>
+        </div>
 
-              <button type="submit" class="btn btn-primary m-3">Signin</button>
-            </form>
-      </div>
+        <button type="submit" id="submitBtn" class="btn btn-primary m-3">
+          Signin
+        </button>
+      </form>
+    </div>
     <%- include("./partials/script") %>
-</body>
+
+    <script>
+      function disableButton() {
+        const submitButton = document.getElementById("submitBtn");
+        submitButton.disabled = true;
+        submitButton.innerText = "Processing...";
+        return true;
+      }
+    </script>
+  </body>
 </html>
